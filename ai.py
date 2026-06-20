@@ -11,6 +11,14 @@ from typing import List, Optional, Tuple
 
 from board import BOARD_SIZE, BLACK, WHITE, EMPTY, Board, DIRECTIONS
 
+# Optional i18n instance for AI messages
+_i18n = None
+
+def set_i18n(i18n_instance) -> None:
+    """Set the i18n instance for AI messages."""
+    global _i18n
+    _i18n = i18n_instance
+
 # Piece-square table for positional evaluation (8x8, from black's perspective)
 # Higher values = better positions
 PIECE_SQUARE: List[List[int]] = [
@@ -161,7 +169,8 @@ def get_ai_move(board: Board, player: int, difficulty: str) -> Optional[Tuple[in
     Get an AI move based on difficulty level.
     Shows a brief thinking animation (dots...).
     """
-    print("AI 思考中", end="", flush=True)
+    thinking_msg = _i18n.get("ai_thinking") if _i18n else "AI thinking"
+    print(thinking_msg, end="", flush=True)
     for _ in range(3):
         time.sleep(0.3)
         print(".", end="", flush=True)

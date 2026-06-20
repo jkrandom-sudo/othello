@@ -11,7 +11,7 @@ import sys
 from typing import Any, Dict, Optional, Tuple
 
 from board import BOARD_SIZE, BLACK, WHITE, EMPTY, Board, COL_LABELS
-from ai import get_ai_move
+from ai import get_ai_move, set_i18n
 from config import load_config, save_config
 from i18n import I18n
 from scores import load_scores, add_score, get_top_scores
@@ -185,7 +185,7 @@ def get_player_name(player: int, config: Dict[str, Any], i18n: I18n) -> str:
         if config["mode"] == "2p":
             return i18n.get("white")
         else:
-            return "AI"
+            return i18n.get("ai")
 
 
 def save_game_state(board: Board, config: Dict[str, Any], i18n: I18n) -> None:
@@ -252,7 +252,7 @@ def game_loop(board: Board, config: Dict[str, Any], i18n: I18n) -> None:
 
         if config["mode"] == "ai" and player == WHITE:
             # AI's turn
-            print(i18n.get("ai_turn"))
+            set_i18n(i18n)
             move = get_ai_move(board, player, config["difficulty"])
             if move is None:
                 continue
